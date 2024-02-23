@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<%- include("../header.ejs") %>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f2f2f2;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        h2 {
+            color: #333;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        li {
+            margin-bottom: 10px;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            background-color: #f9f9f9;
+        }
+
+        label {
+            display: block;
+        }
+
+        input[type="text"] {
+            width: 70%;
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+
+        input[type="checkbox"] {
+            margin-right: 10px;
+        }
+
+        button[type="submit"] {
+            padding: 5px 10px;
+            border: none;
+            border-radius: 4px;
+            background-color: #428bca;
+            color: #fff;
+            cursor: pointer;
+        }
+
+        button[type="submit"]:hover {
+            background-color: #3071a9;
+        }
+    </style>
+<body>
+    <div class="container">
+        <a href="/">Home</a>
+
+        <div id="itemList">
+            <h2><%= list.date.toDateString() %></h2>
+            <ul>
+                <% for (var i = 0; i < list.items.length; i++) { %>
+                    <% var item = list.items[i]; %>
+                    <li>
+                        <div>
+                            <form action="/updateitem" method="POST" name="updateItemForm" style="display:inline;">
+                                <input type="hidden" name="listId" value="<%= list._id %>">
+                                <input type="hidden" name="itemIndex" value="<%= i %>">
+                                <label>
+                                    <input type="checkbox" id="item_<%= i %>" name="completed" value="true" <%= item.completed ? 'checked' : '' %> onchange="this.form.submit()">
+                                    <%= list.items[i].name %>
+                                </label>
+                            </form>
+                    
+                            <form action="/deleteitem" method="POST" style="display:inline;">
+                                <input type="hidden" name="listId" value="<%= list._id %>">
+                                <input type="hidden" name="itemIndex" value="<%= i %>">
+                                <button type="submit">Delete</button>
+                            </form>
+                        </div>
+                    </li>
+                <% } %>
+            </ul>
+        </div>
+
+        <form id="addItemForm" action="/additem" method="POST">
+            <input type="hidden" name="listId" value="<%= list._id%>"> <!-- Hidden input field for list ID -->
+            <input type="text" id="newItem" name="newItem" placeholder="Enter new item">
+            <button type="submit">Add</button>
+        </form>
+    </div>
+</body>
+</html>

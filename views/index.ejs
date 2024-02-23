@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<%- include("./header.ejs") %>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f2f2f2;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        h2 {
+            color: #333;
+        }
+
+        p {
+            color: #666;
+        }
+
+        a {
+            display: block;
+            margin-bottom: 10px;
+            color: #428bca;
+            text-decoration: none;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+    </style>
+    <body>
+        <div class="container">
+            <h2>Welcome</h2>
+            <% if (user) { %>
+                <p>Welcome, <%= user.username %>!</p>
+                <a href="/today">Today</a>
+                <a href="/week">Week List</a>
+                <a href="/month">Month List</a>
+                <a href="/pdays">Previous days</a>
+                <a href="/pweeks">Previous weeks</a>
+                <a href="/pmonths">Previous months</a>
+                <a href="/userlogout">Logout</a>
+            <% } else { %>
+                <p>Please <a href="/userlogin">login</a> or <a href="/userregister">register</a></p>
+            <% } %>
+        </div>
+    </body>
+</html>
